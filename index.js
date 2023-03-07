@@ -48,11 +48,17 @@ const cardArray = [
         img: 'images/pizza.png'
     },
 ]
+
 cardArray.sort(()=>0.5 -Math.random())
 
 const grid = document.querySelector('#grid')
-const cardChosen = []
-const cardchosenId = []
+let cardChosen = []
+const result = document.querySelectorAll('#result')
+let cardchosenId = []
+const cards1 = []
+
+// creating the board function 
+
 function createBoard(){
     for (let i=0 ; i<12; i++ ){
         const card =  document.createElement('img')
@@ -63,8 +69,34 @@ function createBoard(){
     }
 }
 
-createBoard()
-function flipCard(){
+function CheckMatch(){
+    const cards = document.querySelectorAll('img')
+    const checkOptionOneId = cardchosenId[0]
+    const checkOptionTwoId = cardchosenId[1]
+    console.log("check for match")
+      if(checkOptionOneId == checkOptionTwoId){
+        alert("you did it son of a bitch !"); 
+
+    } else if(cardChosen[0] === cardChosen[1] ) {
+        cards[checkOptionOneId].setAttribute('src','images/white.png')
+        cards[checkOptionTwoId].setAttribute('src','images/white.png')
+        cards[checkOptionOneId].removeEventListener('click',flipCard)
+        cards[checkOptionTwoId].removeEventListener('click',flipCard)
+        cards1.push(cardChosen)
+    
+    }else{
+        cards[checkOptionOneId].setAttribute('src','images/blank.png')
+        cards[checkOptionTwoId].setAttribute('src','images/blank.png')
+    }
+    result.textContent = cards1.length
+    cardChosen = []
+    cardchosenId = []
+    if(cards1.length === cardArray/2){
+        result.textContent = 'COngrats you got all of them'
+    }
+  }
+
+  function flipCard(){
     const cardId = this.getAttribute('dataId')
       cardchosenId.push(cardId)
       console.log(cardChosen);
@@ -78,13 +110,4 @@ function flipCard(){
 
 }
 
-function CheckMatch(){
-    const cards = document.querySelectorAll('img')
-      console.log("check for match");
-      if(cardChosen[0] == cardChosen[1]){
-          alert("you did it son of a bitch !"); 
-        cards[cardchosenId[0]].setAttribute('src','images/white.png')
-        cards[cardchosenId[1]].setAttribute('src','images/white.png')
-
-    }
-  }
+  createBoard()
