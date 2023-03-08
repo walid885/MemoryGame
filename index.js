@@ -53,7 +53,7 @@ cardArray.sort(()=>0.5 -Math.random())
 
 const grid = document.querySelector('#grid')
 let cardChosen = []
-const result = document.querySelectorAll('#result')
+const result = document.getElementById('result')
 let cardchosenId = []
 const cards1 = []
 
@@ -64,8 +64,9 @@ function createBoard(){
         const card =  document.createElement('img')
         card.setAttribute('src', 'images/blank.png')
         card.setAttribute('dataId', i)
-        grid.appendChild(card);
         card.addEventListener('click',flipCard)
+        grid.appendChild(card);
+
     }
 }
 
@@ -75,9 +76,10 @@ function CheckMatch(){
     const checkOptionTwoId = cardchosenId[1]
     console.log("check for match")
       if(checkOptionOneId == checkOptionTwoId){
-        alert("you did it son of a bitch !"); 
+        alert("You have clicked the same Image!"); 
 
     } else if(cardChosen[0] === cardChosen[1] ) {
+        alert('you found a match')
         cards[checkOptionOneId].setAttribute('src','images/white.png')
         cards[checkOptionTwoId].setAttribute('src','images/white.png')
         cards[checkOptionOneId].removeEventListener('click',flipCard)
@@ -92,7 +94,7 @@ function CheckMatch(){
     cardChosen = []
     cardchosenId = []
     if(cards1.length === cardArray/2){
-        result.textContent = 'COngrats you got all of them'
+        result.innerHTML = 'COngrats you got all of them'
     }
   }
 
